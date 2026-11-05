@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+#include "playlist.h"
+
+int main(){
+
+    Playlist<std::string>* head = nullptr;
+    Playlist<std::string>* current = nullptr;
+
+    int choice = 0;
+    std::string song;
+
+    while(choice != 7){
+        std::cout<<"\n==== SPOOTIFY SONG PLAYLIST ===="<<std::endl;
+        std::cout<<"1. Add Song"<<std::endl;
+        std::cout<<"2. Remove a Song"<<std::endl;
+        std::cout<<"3. Play All Songs"<<std::endl;
+        std::cout<<"4. Play Current Song"<<std::endl;
+        std::cout<<"5. Next Song"<<std::endl;
+        std::cout<<"6. Previous Song"<<std::endl;
+        std::cout<<"7. Exit"<<std::endl;
+        std::cout<<"Choose a Feature: ";
+        std::cin>>choice;
+
+        switch(choice){
+            case 1:
+                std::cout<<"\nEnter Song Title: ";
+                std::cin>>song;
+                addSong(song, &head);
+
+                if(current == nullptr){
+                    current = head;
+                }
+
+                std::cout<<"\nSong Added Successfully!"<<std::endl;
+                break;
+
+            case 2:
+                std::cout<<"\nEnter Song Title to Remove: ";
+                std::cin>>song;
+                deleteSong(song, &head);
+
+                if(head == nullptr){
+                    current = nullptr;
+                }
+
+                std::cout<<"\nSong Removed Successfully!"<<std::endl;
+                break;
+            
+            case 3:
+                std::cout<<std::endl;
+                DisplaySongs(head);
+                break;
+
+            case 4:
+                if(current == nullptr){
+                    std::cout<<"\nNo Song Is Playing"<<std::endl;
+                }
+                else{
+                    std::cout<<"\nCurrently Playing: "<<current->data<<std::endl;
+                }
+                break;
+    
+            case 5:
+                std::cout<<std::endl;
+                nextSong(&current);
+                break;
+
+            case 6:
+                std::cout<<std::endl;
+                previousSong(&current);
+                break;
+            
+            case 7:
+                std::cout<<"\nExiting!"<<std::endl;
+                break;
+
+        }
+
+    }
+    return 0;
+}
